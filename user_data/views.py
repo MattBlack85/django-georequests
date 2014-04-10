@@ -5,8 +5,8 @@ import json
 
 
 def index(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    print request.META
+    x_forwarded_for = request.META.get('REMOTE_ADDR')
+    #print request.META
     behind_proxy = "You are behind a proxy" if len(x_forwarded_for.split(',')) > 1 else None
 
     if x_forwarded_for:
@@ -14,7 +14,7 @@ def index(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
 
-    geoip = GeoIP('/home/matt/Downloads')
+    geoip = GeoIP('~/')
 
     geo_data = geoip.city(ip)
     
