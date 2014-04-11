@@ -1,23 +1,30 @@
 from django.shortcuts import render
 from django.http import StreamingHttpResponse, HttpResponse
 from django.contrib.gis.geoip import GeoIP
-import json
+
+import json, os
 
 
 def index(request):
-    x_forwarded_for = request.META.get('REMOTE_ADDR')
+    # Try to get the IP from X_FORWARDED_FOR
+    try:
+        x_forwarded_for = request.META.get('X_FORWARDED_FOR')
+    except:
+        x_forwarded_for = None
+
     #print request.META
-    behind_proxy = "You are behind a proxy" if len(x_forwarded_for.split(',')) > 1 else None
 
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
+        behind_proxy = "You are behind a proxy" if len(x_forwarded_for.split(',')) > 1 else None
     else:
         ip = request.META.get('REMOTE_ADDR')
+        behind_proxy = "Can't be established"
 
-    geoip = GeoIP('~/')
+    geoip = GeoIP(os.path.dirname(os.path.dirname(__file__)))
 
     geo_data = geoip.city(ip)
-    
+
     if geo_data:
         country = geo_data.get('country_name')
         country_code = geo_data.get('country_code')
