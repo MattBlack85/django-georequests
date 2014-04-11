@@ -8,7 +8,7 @@ import json, os
 def index(request):
     # Try to get the IP from X_FORWARDED_FOR
     try:
-        x_forwarded_for = request.META.get('X_FORWARDED_FOR')
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     except:
         x_forwarded_for = None
 
