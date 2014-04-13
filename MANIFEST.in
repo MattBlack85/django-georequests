@@ -1,0 +1,3 @@
+include README.rst
+include reversegeoip/GeoIP.dat
+include reversegeoip/GeoLiteCity.dat
