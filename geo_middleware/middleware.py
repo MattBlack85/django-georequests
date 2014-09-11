@@ -28,15 +28,21 @@ class GeoMiddleware(object):
         }
         """
 
+        # Tries to get the value of x-forwarded-for header
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
+            # The first address **should** be the real one, others
+            # are supposed to be proxied IPs.
             ip = x_forwarded_for.split(', ')[0]
         else:
+            # If not x-forwarded-for is present, set the IP to
+            # remote address, note that REMOTE_ADDR is not guaranteed to
+            # be the real IP.
             ip = request.META.get('REMOTE_ADDR')
 
-        # Settings cacheto 1 opens the file the first time
-        # the middleware is used and puts it into memory to
-        # speed up lookup during the following requests.
+        # Settings cache to 1 opens the file the first time
+        # middleware is used and puts it into memory to
+        # speed up lookup during following requests.
         geoip = GeoIP(GEOFILES_DIR, cache=1)
         geodata = GeoData(geoip.city(ip))
         request.GEODATA = geodata.data
