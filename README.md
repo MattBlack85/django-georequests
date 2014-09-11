@@ -1,6 +1,8 @@
 django-reverseGeoIP
 ============
 
+[![Build Status](https://travis-ci.org/MattBlack85/django-georequests.svg?branch=master)](https://travis-ci.org/MattBlack85/django-georequests)
+
 ### Dependencies
 To use this app you will need:
 * GeoIP `sudo yum install GeoIP`
