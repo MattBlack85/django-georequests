@@ -9,7 +9,7 @@ class BaseGeoMiddlewareTest(TestCase):
         self.geo_middleware = GeoMiddleware()
 
     def test_real_request(self):
-        request = RequestFactory(REMOTE_ADDR='173.194.113.110') # Google IP
+        request = RequestFactory(REMOTE_ADDR='173.194.113.110')  # Google IP
         request = request.get("/")
 
         self.geo_middleware.process_request(request)
@@ -33,7 +33,7 @@ class BaseGeoMiddlewareTest(TestCase):
         self.assertEqual(request.GEO, geo_google)
 
     def test_local_request(self):
-        request = RequestFactory() # default address is 127.0.0.1
+        request = RequestFactory()  # default address is 127.0.0.1
         request = request.get("/")
 
         self.geo_middleware.process_request(request)
