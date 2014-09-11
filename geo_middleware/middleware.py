@@ -44,13 +44,7 @@ class GeoMiddleware(object):
         # middleware is used and puts it into memory to
         # speed up lookup during following requests.
         geoip = GeoIP(GEOFILES_DIR, cache=1)
-        geodata = GeoData(geoip.city(ip))
-        request.GEODATA = geodata.data
+        request.GEO = geoip.city(ip)
 
     def process_response(self, request, response):
         return response
-
-
-class GeoData(object):
-    def __init__(self, data):
-        self.data = data
