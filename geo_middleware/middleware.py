@@ -2,7 +2,7 @@ import os
 
 from django.contrib.gis.geoip import GeoIP
 
-GEOFILES_DIR = os.path.dirname(__file__)
+GEOFILES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db/')
 
 
 class GeoMiddleware(object):
