@@ -1,18 +1,24 @@
 import os
-from setuptools import setup
+
+from pip.req import parse_requirements
+from setuptools import setup, find_packages
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
+
+install_reqs = parse_requirements("requirements.txt")
+reqs = [str(ir.req) for ir in install_reqs]
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='django-reversegeoip',
-    version='0.1',
-    packages=['reversegeoip'],
+    name='django-georequests',
+    version='0.2.0-alpha',
+    packages=find_packages(),
     include_package_data=True,
-    license='BSD License',  # example license
-    description='A simple Django app to get Geo info about IPs.',
+    install_requires=reqs,
+    license='BSD License',
+    description='Add geographical info to your incoming requests',
     long_description=README,
     author='Mattia Procopio',
     author_email='promat85@gmail.com',
