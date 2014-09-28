@@ -1,7 +1,11 @@
 import os
 
 from django.contrib.gis.geoip import GeoIP
-from django.http import JsonResponse
+try:
+    from django.http import JsonResponse
+except ImportError:
+    import json
+    from django.http import HttpResponse
 
 DB_PATH = os.path.dirname(os.path.dirname(__file__))
 
@@ -38,4 +42,7 @@ def geoip(request):
             'Longitude': lon if lon else no_data,
         }
 
-    return JsonResponse(data)
+    try:
+        return JsonResponse(data)
+    except NameError:
+        return HttpResponse(json.dumps(data), content_type='application/json')
