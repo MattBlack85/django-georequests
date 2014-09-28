@@ -1,50 +1,41 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+import os
+
 from django.contrib.gis.geoip import GeoIP
+from django.http import JsonResponse
 
-import json, os
+DB_PATH = os.path.dirname(os.path.dirname(__file__))
 
 
-def reverseGeoIP(request):
+def geoip(request):
     # Try to get the IP from HTTP_X_FORWARDED_FOR
-    try:
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    except:
-        x_forwarded_for = None
-
-    print request.META
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    behind_proxy = "Can't be established"
+    geoip = GeoIP(os.path.join(DB_PATH, 'db/'))
+    data = {'message': 'No data for your ip'}
+    no_data = 'No data'
 
     if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-        behind_proxy = "You are behind a proxy" if len(x_forwarded_for.split(',')) > 1 else "No"
+        ip = x_forwarded_for.split(',')[0] # Get the fist IP of the list, the real one.
+        behind_proxy = 'Yes' if len(x_forwarded_for.split(',')) > 1 else 'No'
     else:
+        # Set the ip to the remote address if we have no x_forwarded_for in the request
         ip = request.META.get('REMOTE_ADDR')
-        behind_proxy = "Can't be established"
-
-    geoip = GeoIP(os.path.dirname(__file__))
 
     geo_data = geoip.city(ip)
-
     if geo_data:
-        country = geo_data.get('country_name')
-        country_code = geo_data.get('country_code')
-        city = geo_data.get('city')
-        latitude = geo_data.get('latitude')
-        longitude = geo_data.get('longitude')
-
-        data = {"IP": ip,
-                "Proxy": behind_proxy,
-                "Country": country,
-                "Country Code": country_code,
-                "City": geo_data['city'] if geo_data['city'] else "No data",
-                "Latitude": geo_data['latitude'] if geo_data['latitude'] else "No data",
-                "Longitude": geo_data['longitude'] if geo_data['longitude'] else "No data",
-                "Message": "Ok"
+        country = geo_data['country_name']
+        country_code = geo_data['country_code']
+        city = geo_data['city']
+        lat = geo_data['latitude']
+        lon = geo_data['longitude']
+        data = {
+            'IP': ip,
+            'Proxy': behind_proxy,
+            'Country': country if country else no_data,
+            'Country Code': country_code if country_code else no_data,
+            'City': city if city else no_data,
+            'Latitude': lat if lat else no_data,
+            'Longitude': lon if lon else no_data,
         }
 
-    else:
-        data = {"Message": "No data for your ip"}
-
-    response = HttpResponse(json.dumps(data), content_type="application/json")
-
-    return response
+    return JsonResponse(data)
