@@ -60,7 +60,7 @@ This exposes a uri like `/api/v1/geoip` into your app, you can then hit this uri
   )
   ```
 
-* edit your main <strong>urls.py</strong> adding the following line <br> (you can change the uri in whatever you want)
+* edit your main <strong>urls.py</strong> adding the following line <br> (you can change the uri in whatever you want):
   `url(r'^api/v1/geoip/$', include('reversegeoip.urls')),`
 * Run your test server and surf to that URL.
 
