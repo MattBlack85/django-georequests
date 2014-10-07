@@ -9,7 +9,7 @@ class GeoMiddleware(object):
     def process_request(self, request):
         """
         Tries to catch the real IP of the request and adds geo details
-        to the request itself. The value of request.GEODATA is a dictionary
+        to the request itself. The value of request.GEO is a dictionary
         that looks like:
 
         {
