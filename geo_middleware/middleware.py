@@ -2,6 +2,8 @@ import os
 
 from django.contrib.gis.geoip import GeoIP
 
+from geodashboard.models import Visits
+
 GEOFILES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db/')
 
 
@@ -9,7 +11,7 @@ class GeoMiddleware(object):
     def process_request(self, request):
         """
         Tries to catch the real IP of the request and adds geo details
-        to the request itself. The value of request.GEODATA is a dictionary
+        to the request itself. The value of request.GEO is a dictionary
         that looks like:
 
         {
@@ -45,6 +47,19 @@ class GeoMiddleware(object):
         # speed up lookup during following requests.
         geoip = GeoIP(GEOFILES_DIR, cache=1)
         request.GEO = geoip.city(ip)
+        save_request(request, ip)
 
     def process_response(self, request, response):
         return response
+
+
+def save_request(request, ip):
+    if isinstance(request.GEO, dict):
+        data = {
+            'ip': ip,
+            'country': request.GEO.get('country_code'),
+            'url': request.path,
+            'referer': request.META.get('HTTP_REFERER') or '',
+            'agent': request.META.get('HTTP_USER_AGENT') or ''
+        }
+        Visits.objects.create(**data)
