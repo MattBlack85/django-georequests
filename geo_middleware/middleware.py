@@ -2,7 +2,7 @@ import os
 
 from django.contrib.gis.geoip import GeoIP
 
-from dashboard.models import Visits
+from geodashboard.models import Visits
 
 GEOFILES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db/')
 

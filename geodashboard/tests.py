@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
 
-from dashboard.models import Visits
+from .models import Visits
 from geo_middleware.middleware import GeoMiddleware
 
 

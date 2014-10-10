@@ -13,7 +13,7 @@ def run_tests():
         INSTALLED_APPS=[
             'geo_middleware',
             'reversegeoip',
-            'dashboard'
+            'geodashboard'
         ],
         DATABASES={
             'default': {
@@ -30,7 +30,7 @@ def run_tests():
     test_runner = DjangoTestSuiteRunner(verbosity=2)
     return test_runner.run_tests(['geo_middleware',
                                   'reversegeoip',
-                                  'dashboard'])
+                                  'geodashboard'])
 
 def main():
     failures = run_tests()
