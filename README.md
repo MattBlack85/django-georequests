@@ -28,6 +28,14 @@ This is a middleware you can add into your settings, to use it:
       'georequests.geomiddlewares.middleware.GeoMiddleware',
   )
   ```
+* Add geodashboard to your installed apps:
+  ```
+  INSTALLED_APPS = (
+      .....,
+      .....,
+      geodashboard,
+  )
+  ```
 
   After adding the middleware every incoming request will have a new attribute, GEO, which holds some geographical information regarding the request's IP e.g
   ```JSON
@@ -46,7 +54,8 @@ This is a middleware you can add into your settings, to use it:
 	'region': u'CA'
   }
   ```
-* You can use that information to have a better redirection if you use i18n, or to save those informations for later analysis.
+* You can use that information to have a better redirection if you use i18n, or to save those informations for later analysis. Every request is saved
+  into the database, storing the requested url, the ip, the country, the agent and the referer.
 
 ### GeoIP
 This exposes a uri like `/api/v1/geoip` into your app, you can then hit this uri to get some information regarding an IP. It returns a JSONResponse.
