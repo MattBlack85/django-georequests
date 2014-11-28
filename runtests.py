@@ -5,7 +5,6 @@ import sys
 
 def run_tests():
     import django
-    from django.conf import global_settings
     from django.conf import settings
 
     settings.configure(
