@@ -7,6 +7,7 @@ from .views import geoip
 
 
 class GeoIPBaseTest(TestCase):
+
     def test_google_request(self):
         request = RequestFactory(HTTP_X_FORWARDED_FOR='173.194.113.110').get('/api/v1/geoip')
         response = geoip(request)

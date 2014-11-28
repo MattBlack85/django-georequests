@@ -1,11 +1,13 @@
 from django.test import TestCase
 from django.test.client import RequestFactory
 
+from djeorequests.geo_middleware.middleware import GeoMiddleware
+
 from .models import Visits
-from geo_middleware.middleware import GeoMiddleware
 
 
 class BaseVisitTest(TestCase):
+
     def test_request_saved(self):
         request = RequestFactory(REMOTE_ADDR='173.194.113.110')
         request = request.get("/")
