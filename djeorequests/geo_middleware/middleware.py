@@ -2,12 +2,13 @@ import os
 
 from django.contrib.gis.geoip import GeoIP
 
-from geodashboard.models import Visits
+from djeorequests.geodashboard.models import Visits
 
 GEOFILES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db/')
 
 
 class GeoMiddleware(object):
+
     def process_request(self, request):
         """
         Tries to catch the real IP of the request and adds geo details

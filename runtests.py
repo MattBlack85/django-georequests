@@ -5,15 +5,14 @@ import sys
 
 def run_tests():
     import django
-    from django.conf import global_settings
     from django.conf import settings
-
 
     settings.configure(
         INSTALLED_APPS=[
-            'geo_middleware',
-            'reversegeoip',
-            'geodashboard'
+            'djeorequests',
+            'djeorequests.geo_middleware',
+            'djeorequests.geodashboard',
+            'djeorequests.reversegeoip'
         ],
         DATABASES={
             'default': {
@@ -29,8 +28,9 @@ def run_tests():
 
     test_runner = DjangoTestSuiteRunner(verbosity=2)
     return test_runner.run_tests(['geo_middleware',
-                                  'reversegeoip',
-                                  'geodashboard'])
+                                  'geodashboard',
+                                  'reversegeoip'])
+
 
 def main():
     failures = run_tests()
