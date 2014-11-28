@@ -14,5 +14,8 @@ env:
 install:
   - pip install -q $DJANGO_VERSION
   - pip install geoip
+  - pip install pyflakes
 
-script: python runtests.py
+script:
+  - python runtests.py
+  - pyflakes .
