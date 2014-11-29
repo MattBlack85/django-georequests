@@ -1,3 +1,3 @@
 include README.rst
-include db/GeoIP.dat
-include db/GeoLiteCity.dat
+include djeorequests/db/GeoIP.dat
+include djeorequests/db/GeoLiteCity.dat
