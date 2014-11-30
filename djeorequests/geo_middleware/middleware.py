@@ -2,7 +2,7 @@ import os
 
 from django.contrib.gis.geoip import GeoIP
 
-from djeorequests.geodashboard.models import Visits
+from djeorequests.geodashboard.models import Visit
 
 GEOFILES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db/')
 
@@ -63,4 +63,4 @@ def save_request(request, ip):
             'referer': request.META.get('HTTP_REFERER') or '',
             'agent': request.META.get('HTTP_USER_AGENT') or ''
         }
-        Visits.objects.create(**data)
+        Visit.objects.create(**data)
