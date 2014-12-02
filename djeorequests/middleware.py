@@ -51,6 +51,8 @@ class GeoMiddleware(object):
         save_request(request, ip)
 
     def process_response(self, request, response):
+        if request.get('GEO'):
+            del request['GEO']
         return response
 
 
