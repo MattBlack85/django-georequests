@@ -4,7 +4,7 @@ from django.contrib.gis.geoip import GeoIP
 
 from djeorequests.geodashboard.models import Visit
 
-GEOFILES_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db/')
+GEOFILES_DIR = os.path.join(os.path.dirname(__file__), 'db/')
 
 
 class GeoMiddleware(object):

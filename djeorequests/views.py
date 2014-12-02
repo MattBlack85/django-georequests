@@ -7,7 +7,7 @@ except ImportError:
     import json
     from django.http import HttpResponse
 
-DB_PATH = os.path.dirname(os.path.dirname(__file__))
+DB_PATH = os.path.dirname(__file__)
 
 
 def geoip(request):
