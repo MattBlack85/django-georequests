@@ -10,9 +10,7 @@ def run_tests():
     settings.configure(
         INSTALLED_APPS=[
             'djeorequests',
-            'djeorequests.geo_middleware',
             'djeorequests.geodashboard',
-            'djeorequests.reversegeoip'
         ],
         DATABASES={
             'default': {
@@ -27,9 +25,8 @@ def run_tests():
     from django.test.simple import DjangoTestSuiteRunner
 
     test_runner = DjangoTestSuiteRunner(verbosity=2)
-    return test_runner.run_tests(['geo_middleware',
-                                  'geodashboard',
-                                  'reversegeoip'])
+    return test_runner.run_tests(['djeorequests',
+                                  'geodashboard'])
 
 
 def main():
