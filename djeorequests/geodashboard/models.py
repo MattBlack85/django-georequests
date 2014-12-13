@@ -7,3 +7,4 @@ class Visit(models.Model):
     url = models.CharField('requested url', max_length=100)
     referer = models.CharField(max_length=100, blank=True, default='')
     agent = models.CharField(max_length=100)
+    date = models.DateField(auto_now_add=True)
