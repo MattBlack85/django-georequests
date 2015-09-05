@@ -19,7 +19,7 @@ def geoip(request):
     no_data = 'No data'
 
     if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0] # Get the fist IP of the list, the real one.
+        ip = x_forwarded_for.split(',')[0]  # Get the first IP of the list, the real one.
         behind_proxy = 'Yes' if len(x_forwarded_for.split(',')) > 1 else 'No'
     else:
         # Set the ip to the remote address if we have no x_forwarded_for in the request

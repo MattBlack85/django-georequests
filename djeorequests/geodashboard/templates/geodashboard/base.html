@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="http://code.highcharts.com/mapdata/custom/world.js"></script>
+  </head>
+  <body>
+    {% block content %}{% endblock content %}
+    <script>
+      $(function () {
+
+        // Prepare data
+        var data = {{ top_10|safe }};
+
+        // Initiate the chart
+        $('#container').highcharts('Map', {
+            title : {
+                text : 'Visits per country'
+            },
+            subtitle : {
+                text : 'Source map: <a href="http://code.highcharts.com/mapdata/custom/world.js">World</a>'
+            },
+            mapNavigation: {
+                enabled: true,
+                buttonOptions: {
+                    verticalAlign: 'bottom'
+                }
+            },
+            colorAxis: {
+                min: 0,
+                minColor: '#ACE1AF',
+                maxColor: '#008000'
+            },
+            series : [{
+                data : data,
+                mapData: Highcharts.maps['custom/world'],
+                joinBy: 'hc-key',
+                name: 'Visits',
+                states: {
+                    hover: {
+                        color: '#BADA55'
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }]
+        });
+    });
+    </script>
+  </body>
+</html>
